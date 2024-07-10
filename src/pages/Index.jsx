@@ -1,10 +1,31 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+  const [trackingNumber, setTrackingNumber] = useState("");
+  const navigate = useNavigate();
+
+  const handleTrack = () => {
+    if (trackingNumber) {
+      navigate(`/track?id=${trackingNumber}`);
+    }
+  };
+
   return (
-    <div className="text-center">
-      <h1 className="text-3xl">Your Blank Canvas</h1>
-      <p>Chat with the agent to start making edits.</p>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-4xl font-bold text-center mb-4">Shipment Tracking</h1>
+      <p className="text-xl text-center mb-8">Track your cargo shipments in real-time</p>
+      <div className="flex max-w-md mx-auto space-x-2">
+        <Input
+          type="text"
+          placeholder="Enter tracking number"
+          value={trackingNumber}
+          onChange={(e) => setTrackingNumber(e.target.value)}
+        />
+        <Button onClick={handleTrack}>Track</Button>
+      </div>
     </div>
   );
 };
