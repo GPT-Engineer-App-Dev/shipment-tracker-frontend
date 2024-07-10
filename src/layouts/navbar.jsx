@@ -12,13 +12,23 @@ import { cn } from "@/lib/utils";
 import { CircleUser, Menu, Package2 } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
 import { navItems } from "../App";
+import { useSupabaseAuth } from "@/integrations/supabase/auth";
 
 const Layout = () => {
+  const { session, logout } = useSupabaseAuth();
+
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 justify-between">
         <DesktopNav />
         <MobileNav />
+        {session ? (
+          <UserMenu logout={logout} />
+        ) : (
+          <NavLink to="/login" className="text-sm font-medium">
+            Login
+          </NavLink>
+        )}
       </header>
       <main className="flex-grow overflow-auto">
         <Outlet />
@@ -71,7 +81,7 @@ const MobileNav = () => (
   </Sheet>
 );
 
-const UserMenu = () => (
+const UserMenu = ({ logout }) => (
   <DropdownMenu>
     <DropdownMenuTrigger asChild>
       <Button variant="secondary" size="icon" className="rounded-full">
@@ -85,7 +95,7 @@ const UserMenu = () => (
       <DropdownMenuItem>Settings</DropdownMenuItem>
       <DropdownMenuItem>Support</DropdownMenuItem>
       <DropdownMenuSeparator />
-      <DropdownMenuItem>Logout</DropdownMenuItem>
+      <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
 );
