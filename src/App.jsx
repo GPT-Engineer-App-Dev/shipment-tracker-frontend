@@ -1,12 +1,13 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Home, Package, UserPlus } from "lucide-react";
+import { Home, Package, UserPlus, ClipboardList } from "lucide-react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Layout from "./layouts/navbar";
 import Index from "./pages/Index.jsx";
 import TrackShipment from "./pages/TrackShipment.jsx";
 import AddCustomer from "./pages/AddCustomer.jsx";
+import ManageOrders from "./pages/ManageOrders.jsx";
 const queryClient = new QueryClient();
 
 export const navItems = [
@@ -25,6 +26,11 @@ export const navItems = [
     to: "/add-customer",
     icon: <UserPlus className="h-4 w-4" />,
   },
+  {
+    title: "Manage Orders",
+    to: "/manage-orders",
+    icon: <ClipboardList className="h-4 w-4" />,
+  },
 ];
 
 const App = () => {
@@ -38,6 +44,7 @@ const App = () => {
               <Route index element={<Index />} />
               <Route path="/track" element={<TrackShipment />} />
               <Route path="/add-customer" element={<AddCustomer />} />
+              <Route path="/manage-orders" element={<ManageOrders />} />
             </Route>
           </Routes>
         </Router>
